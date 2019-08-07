@@ -1,0 +1,136 @@
+<style>
+header, header ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #111;
+  color: steelblue;
+  font-family: impact;
+  border-radius: 20px;
+  padding: 5px 20px;
+}
+
+header {
+  font-size: 150%;
+}
+
+body {
+  /* display: flex; */
+  /* background-color: blue;
+  justify-content: space-between;
+  align-items: center; */
+  /* background-color: #111; */
+  /* color: steelblue; */
+  /* font-family: impact; */
+  /* font-size: 150%; */
+  /* border-radius: 20px; */
+  /* padding: 5px 20px; */
+}
+
+header ul li {
+  list-style: none;
+}
+
+.button {
+  border: none;
+  border-radius: 10px;
+  background-color: #111;
+  color: steelblue;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+}
+
+h2 {
+  color: steelblue;
+  font-family: impact;
+  font-size: 200%;
+}
+
+p {
+  color: steelblue;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 100%;
+}
+
+body {
+  background-color: silver;
+}
+
+#current-user {
+  display: flex;
+  background-color: #111;
+  display: flex;
+  flex-direction: row;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+input[type=submit] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: impact;
+  font-size: 100%;
+  color: steelblue;
+  background: #111;
+  border: none;
+  padding: 15px 32px;
+  border-radius: 10px;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MusicApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <header>
+    <h1>MusicApp</h1>
+      <% if logged_in? %>
+        <ul>
+          <form action="<%= session_url %>" method="POST">
+            <input class="button" type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input class="button" type="hidden" name="_method" value="DELETE">
+          <li><input class="button" type="submit" value="Sign Out"></li> 
+        </ul>
+      <% else %>
+        <ul>
+          <li><a class="button" href="<%= new_session_url %>"> Log In </a></li>
+          <li><a class="button" href="<%= new_user_url %>"> Sign Up </a></li>
+        </ul>
+      <% end %>
+  </header>
+
+  <body>
+    <% if flash[:errors] %>
+        <% flash[:errors].each do |error| %>
+        <p style="color: red"> <%= error %> </p>
+      <% end %>
+    <% end %>
+
+    <div class="user-status">
+      <% if logged_in? %>
+        <p id="current-user">Logged in as: <%= current_user.email %></p>
+        </form>
+      <% end %>
+    </div>
+
+
+
+    <%= yield %>
+  </body>
+</html>
